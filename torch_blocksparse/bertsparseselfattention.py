@@ -17,8 +17,7 @@ class BertSparseSelfAttention(nn.Module):
         self,
         config,
         # SparsityConfig parameters needs to be set accordingly
-        sparsity_config=FixedSparsityConfig(num_heads=4,
-                                            seq_len=1024)):
+        sparsity_config=FixedSparsityConfig(num_heads=4)):
         """Initialize the bert sparse self attention layer.
 
         Note) you can use any of the provided sparsity configs or simply add yours!
@@ -50,7 +49,11 @@ class BertSparseSelfAttention(nn.Module):
         x = x.view(*new_x_shape)
         return x.permute(0, 2, 1, 3)
 
-    def forward(self, hidden_states, attention_mask):
+    def forward(self, hidden_states, attention_mask,
+            head_mask=None,
+            encoder_hidden_states=None,
+            encoder_attention_mask=None,
+            output_attentions=False):
         """Applies forward phase of bert sparse self attention
 
         Arguments:
@@ -76,4 +79,4 @@ class BertSparseSelfAttention(nn.Module):
         context_layer = context_layer.permute(0, 2, 1, 3).contiguous()
         new_context_layer_shape = context_layer.size()[:-2] + (self.all_head_size, )
         context_layer = context_layer.view(*new_context_layer_shape)
-        return context_layer
+        return (context_layer, )

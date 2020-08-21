@@ -76,8 +76,7 @@ def replace_model_self_attention_with_sparse_self_attention(
     model,
     max_position,
     # SparsityConfig parameters needs to be set accordingly
-    sparsity_config=SparsityConfig(num_heads=4,
-                                   seq_len=1024)):
+    sparsity_config=SparsityConfig(num_heads=4)):
     """This function replaces the self attention layers in model encoder with sparse self attention.
     It currently supports bert and roberta model and can be easily extended to any other models following similar steps here.
     For sparsityConfig, refer to the config class.
@@ -114,8 +113,7 @@ def replace_self_attention_layer_with_sparse_self_attention_layer(
     config,
     layers,
     # SparsityConfig parameters needs to be set accordingly
-    sparsity_config=SparsityConfig(num_heads=4,
-                                   seq_len=1024)):
+    sparsity_config=SparsityConfig(num_heads=4)):
     """This function replaces the self attention layers in attention layer with sparse self attention.
     For sparsityConfig, refer to the config class.
 
